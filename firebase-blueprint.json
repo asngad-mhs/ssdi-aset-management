@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile containing roles and identification",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] }
+      },
+      "required": ["uid", "email", "name", "role"]
+    },
+    "Asset": {
+      "title": "Asset",
+      "description": "A tracked asset in the system",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "status": { "type": "string", "enum": ["Active", "Maintenance", "Deprecated", "Disposed"] },
+        "purchaseDate": { "type": "string" },
+        "value": { "type": "number" },
+        "location": { "type": "string" },
+        "owner": { "type": "string" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["name", "category", "status", "purchaseDate", "value", "location", "owner", "lastUpdated"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System activity logs",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string" },
+        "user": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["timestamp", "user", "action", "details"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System notifications for users",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string" },
+        "message": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "type": { "type": "string", "enum": ["info", "warning", "success", "alert"] }
+      },
+      "required": ["timestamp", "message", "isRead", "type"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles. Contains the user's role."
+    },
+    "assets/{assetId}": {
+      "schema": { "$ref": "#/entities/Asset" },
+      "description": "Assets in the system. Readable by users, writable by admins."
+    },
+    "auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Audit trails. Readable by admins, writable by admins."
+    },
+    "notifications/{notifId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Global notifications."
+    }
+  }
+}
