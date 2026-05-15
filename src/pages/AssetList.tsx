@@ -7,10 +7,10 @@ import { formatCurrency } from '../lib/utils';
 import { Search, Plus, Filter, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import { Modal } from '../components/ui/modal';
 
-export function AssetList() {
+export function AssetList({ defaultFilter = 'All', pageTitle = 'Manajemen Aset', lockFilter = false }: { defaultFilter?: string | string[], pageTitle?: string, lockFilter?: boolean }) {
   const { assets, deleteAsset, addAsset, updateAsset, currentUser } = useAppStore();
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterStatus, setFilterStatus] = useState('All');
+  const [filterStatus, setFilterStatus] = useState<string | string[]>(defaultFilter);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,9 +36,17 @@ export function AssetList() {
       const matchesSearch = asset.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             asset.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             asset.owner.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesStatus = filterStatus === 'All' || asset.status === filterStatus;
+      
+      const isStatusMatch = () => {
+        if (filterStatus === 'All') return true;
+        if (Array.isArray(filterStatus)) {
+          return filterStatus.includes(asset.status);
+        }
+        return asset.status === filterStatus;
+      };
+
       const matchesTags = selectedTags.length === 0 || selectedTags.includes(asset.category);
-      return matchesSearch && matchesStatus && matchesTags;
+      return matchesSearch && isStatusMatch() && matchesTags;
     });
   }, [assets, searchTerm, filterStatus, selectedTags]);
 
@@ -74,7 +82,7 @@ export function AssetList() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Manajemen Aset</h1>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">{pageTitle}</h1>
           <p className="text-sm text-gray-500 mt-1">Kelola data aset, siklus hidup, dan lokasi inventaris.</p>
         </div>
         {isAdmin && (
@@ -101,15 +109,21 @@ export function AssetList() {
             <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Status:</span>
             <Select 
               className="w-full md:w-40"
-              value={filterStatus}
+              value={Array.isArray(filterStatus) ? filterStatus.join(',') : filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              options={[
-                { label: 'Semua Status', value: 'All' },
-                { label: 'Active', value: 'Active' },
-                { label: 'Maintenance', value: 'Maintenance' },
-                { label: 'Deprecated', value: 'Deprecated' },
-                { label: 'Disposed', value: 'Disposed' },
-              ]}
+              disabled={lockFilter}
+              options={
+                lockFilter ? [
+                  { label: Array.isArray(filterStatus) ? 'Beberapa Status' : filterStatus, value: Array.isArray(filterStatus) ? filterStatus.join(',') : filterStatus }
+                ] : [
+                  { label: 'Semua Status', value: 'All' },
+                  { label: 'Pending', value: 'Pending' },
+                  { label: 'Active', value: 'Active' },
+                  { label: 'Maintenance', value: 'Maintenance' },
+                  { label: 'Deprecated', value: 'Deprecated' },
+                  { label: 'Disposed', value: 'Disposed' },
+                ]
+              }
             />
           </div>
         </div>
@@ -175,6 +189,7 @@ export function AssetList() {
                     <Badge variant={
                       asset.status === 'Active' ? 'success' :
                       asset.status === 'Maintenance' ? 'warning' :
+                      asset.status === 'Pending' ? 'secondary' :
                       asset.status === 'Deprecated' ? 'secondary' : 'destructive'
                     }>
                       {asset.status}
@@ -240,6 +255,7 @@ export function AssetList() {
                 value={formData.status || 'Active'} 
                 onChange={e => setFormData({...formData, status: e.target.value as AssetStatus})}
                 options={[
+                  { label: 'Pending', value: 'Pending' },
                   { label: 'Active', value: 'Active' },
                   { label: 'Maintenance', value: 'Maintenance' },
                   { label: 'Deprecated', value: 'Deprecated' },

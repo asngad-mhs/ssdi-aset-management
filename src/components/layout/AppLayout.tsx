@@ -30,7 +30,11 @@ export function AppLayout({ children, activePath, onNavigate }: LayoutProps) {
 
   const allNavItems = [
     { name: "Dashboard", path: "dashboard", icon: LayoutDashboard },
-    { name: "Manajemen Aset", path: "assets", icon: Box },
+    { name: "Semua Aset", path: "assets", icon: Box },
+    { name: "Aset Pengajuan", path: "assets-pengajuan", icon: Box },
+    { name: "Aset Terpakai", path: "assets-terpakai", icon: Box },
+    { name: "Aset Tidak Dipakai", path: "assets-tidak-dipakai", icon: Box },
+    { name: "Aset Rusak", path: "assets-rusak", icon: Box },
     { name: "Laporan & Ekspor", path: "reports", icon: PieChart },
     { name: "Audit Trail", path: "audit", icon: History, adminOnly: true },
     { name: "Pengaturan", path: "settings", icon: Settings, adminOnly: true },

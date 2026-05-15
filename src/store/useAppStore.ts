@@ -3,7 +3,7 @@ import { db, auth, handleFirestoreError, OperationType } from '../lib/firebase';
 import { collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, getDoc } from 'firebase/firestore';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 
-export type AssetStatus = 'Active' | 'Maintenance' | 'Deprecated' | 'Disposed';
+export type AssetStatus = 'Active' | 'Maintenance' | 'Deprecated' | 'Disposed' | 'Pending';
 
 export type UserRole = 'admin' | 'user';
 

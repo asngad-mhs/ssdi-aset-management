@@ -45,6 +45,14 @@ export default function App() {
         return <Dashboard />;
       case 'assets':
         return <AssetList />;
+      case 'assets-pengajuan':
+        return <AssetList defaultFilter="Pending" pageTitle="Aset Pengajuan" lockFilter />;
+      case 'assets-terpakai':
+        return <AssetList defaultFilter="Active" pageTitle="Aset Terpakai" lockFilter />;
+      case 'assets-tidak-dipakai':
+        return <AssetList defaultFilter={['Deprecated', 'Disposed']} pageTitle="Aset Tidak Dipakai" lockFilter />;
+      case 'assets-rusak':
+        return <AssetList defaultFilter="Maintenance" pageTitle="Aset Rusak" lockFilter />;
       case 'reports':
         return <Reports />;
       case 'audit':
