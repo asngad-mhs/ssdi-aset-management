@@ -105,8 +105,8 @@ export function Settings() {
                 </div>
               )}
 
-              <div className="border border-gray-200 rounded-md overflow-hidden">
-                <table className="w-full text-sm text-left">
+              <div className="border border-gray-200 rounded-md overflow-x-auto">
+                <table className="w-full text-sm text-left min-w-max">
                   <thead className="bg-gray-50 text-gray-700 border-b border-gray-200">
                     <tr>
                       <th className="px-4 py-3 font-medium">Nama</th>
