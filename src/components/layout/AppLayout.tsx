@@ -60,8 +60,8 @@ export function AppLayout({ children, activePath, onNavigate }: LayoutProps) {
         )}
       >
         <div className="h-16 flex items-center px-6 border-b border-gray-200">
-          <div className="flex items-center gap-2 text-blue-600 font-bold text-xl tracking-tight">
-            <Box className="w-6 h-6" />
+          <div className="flex items-center gap-3 text-blue-600 font-bold text-xl tracking-tight">
+            <img src="/ssdi-logo.jfif" alt="SSDI Logo" className="w-9 h-9 object-cover rounded-lg shadow-sm border border-blue-100" />
             <span>SSDI Aset</span>
           </div>
           <button 

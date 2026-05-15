@@ -61,10 +61,8 @@ export function Login({ onBack }: { onBack?: () => void }) {
         <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col h-full">
-          <div className="flex items-center gap-2.5 font-bold text-2xl tracking-tight mb-auto">
-            <div className="bg-blue-600 p-1.5 rounded-lg">
-              <Box className="w-5 h-5 text-white" />
-            </div>
+          <div className="flex items-center gap-3 font-bold text-2xl tracking-tight mb-auto">
+            <img src="/ssdi-logo.jfif" alt="SSDI Logo" className="w-12 h-12 object-cover rounded-xl shadow-md border border-white/10" />
             <span>SSDI</span>
           </div>
 

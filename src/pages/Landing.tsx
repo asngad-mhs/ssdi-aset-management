@@ -11,10 +11,8 @@ export function Landing({ onLoginClick }: LandingProps) {
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Navbar */}
       <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2.5 text-blue-600">
-          <div className="bg-blue-600 p-1.5 rounded-lg">
-            <Box className="w-5 h-5 text-white" />
-          </div>
+        <div className="flex items-center gap-3 text-blue-600">
+          <img src="/ssdi-logo.jfif" alt="SSDI Logo" className="w-10 h-10 object-cover rounded-xl shadow-sm border border-blue-100" />
           <span className="font-semibold text-xl tracking-tight text-gray-900">SSDI Aset</span>
         </div>
         <div>
