@@ -7,12 +7,14 @@ import { AuditTrail } from './pages/AuditTrail';
 import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 import { Login } from './pages/Login';
+import { Landing } from './pages/Landing';
 
 export default function App() {
   const currentUser = useAppStore((state) => state.currentUser);
   const isInitialized = useAppStore((state) => state.isInitialized);
   const setupListeners = useAppStore((state) => state.setupListeners);
   const [activePath, setActivePath] = useState('dashboard');
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     let unsub = () => {};
@@ -31,7 +33,10 @@ export default function App() {
   }
 
   if (!currentUser) {
-    return <Login />;
+    if (showLogin) {
+      return <Login onBack={() => setShowLogin(false)} />;
+    }
+    return <Landing onLoginClick={() => setShowLogin(true)} />;
   }
 
   const renderContent = () => {

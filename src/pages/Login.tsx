@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { UserRole } from '../store/useAppStore';
 import { Button, Input, Card, CardContent, CardDescription, CardHeader, CardTitle, Badge } from '../components/ui/core';
-import { Box, Lock, User as UserIcon, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Box, Lock, User as UserIcon, ShieldAlert, ArrowRight, ArrowLeft } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
-export function Login() {
+export function Login({ onBack }: { onBack?: () => void }) {
   const [activeTab, setActiveTab] = useState<UserRole>('admin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -79,8 +79,16 @@ export function Login() {
         </div>
 
         {/* Right Side - Login Form */}
-        <div className="p-8 md:p-12 flex flex-col justify-center">
+        <div className="p-8 md:p-12 flex flex-col justify-center relative">
           <div className="mb-8">
+            <button 
+              type="button" 
+              onClick={() => onBack ? onBack() : window.location.href = '/'} 
+              className="flex w-fit items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors mb-6"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Kembali
+            </button>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Selamat Datang</h2>
             <p className="text-gray-500">Pilih role Anda untuk masuk ke sistem</p>
           </div>
